@@ -1,0 +1,437 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/beacon_station"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="radiofyr - Konfigurera"
+                android:textColor="#70554E"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Proximity UUID (16 hex values)"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/uuidhi"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.7"
+                        android:background="@drawable/rounded_textfield"
+                        android:contentDescription="Proximity UUID"
+                        android:digits="0123456789ABCDEF"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:paddingBottom="0dp"
+                        android:paddingTop="0dp"
+                        android:text="3ad10f4300000000"
+                        android:textAppearance="?android:attr/textAppearance"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:typeface="monospace" />
+
+                    <EditText
+                        android:id="@+id/uuidlo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.7"
+                        android:background="@drawable/rounded_textfield"
+                        android:contentDescription="Proximity UUID"
+                        android:digits="0123456789ABCDEF"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:paddingBottom="0dp"
+                        android:paddingTop="0dp"
+                        android:text="0000000000000001"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:typeface="monospace" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/buttonWriteUUID"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="17dp"
+                        android:alpha="0.7"
+                        android:background="@drawable/simpleshape"
+                        android:text="Spara"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Major Number"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/major"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:background="@drawable/rounded_textfield"
+                        android:contentDescription="Major Number"
+                        android:inputType="numberDecimal"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="0dp"
+                        android:text="22"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/buttonWriteMajor"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="17dp"
+                        android:alpha="0.7"
+                        android:background="@drawable/simpleshape"
+                        android:text="Spara"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Minor Number"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/minor"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:background="@drawable/rounded_textfield"
+                        android:contentDescription="Minor Number"
+                        android:inputType="numberDecimal"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="0dp"
+                        android:text="22"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/buttonWriteMinor"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="17dp"
+                        android:alpha="0.7"
+                        android:background="@drawable/simpleshape"
+                        android:text="Spara"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transmit Power"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTxPower"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginTop="0dp"
+                        android:contentDescription="Beacon Transmit Power"
+                        android:prompt="@string/txPowerPrompt"
+                        android:entries="@array/power_settings" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/buttonWriteTXPower"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="17dp"
+                        android:alpha="0.7"
+                        android:background="@drawable/simpleshape"
+                        android:text="Spara"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Advertising Interval"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/advInterval"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:background="@drawable/rounded_textfield"
+                        android:contentDescription="Advertising Interval"
+                        android:inputType="numberDecimal"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="0dp"
+                        android:text="500"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/buttonWriteAdvInterval"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="17dp"
+                        android:alpha="0.7"
+                        android:background="@drawable/simpleshape"
+                        android:text="Spara"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FG Scan Period"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/fgScanPeriod"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:background="@drawable/rounded_textfield"
+                        android:contentDescription="Foreground Scan Period"
+                        android:inputType="numberDecimal"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="0dp"
+                        android:text="500"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/buttonWriteFgScanPeriod"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="17dp"
+                        android:alpha="0.7"
+                        android:background="@drawable/simpleshape"
+                        android:text="Spara"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BG Scan Period"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/bgScanPeriod"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:background="@drawable/rounded_textfield"
+                        android:contentDescription="Background Scan Period"
+                        android:inputType="numberDecimal"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="0dp"
+                        android:text="500"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/buttonWriteBgScanPeriod"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="17dp"
+                        android:alpha="0.7"
+                        android:background="@drawable/simpleshape"
+                        android:text="Spara"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+   </ScrollView>
+
+</RelativeLayout>

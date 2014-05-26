@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Radiofyr</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="txPowerPrompt">Transmit Power</string>
+
+    <string-array name="power_settings">
+        <item>0dBm  (normal)</item>
+        <item>4dBm  (strong)</item>
+        <item>-6dBm  (weaker)</item>
+        <item>-23dBm (weakest)</item>
+    </string-array>
+</resources>
