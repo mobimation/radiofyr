@@ -23,7 +23,12 @@ import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconCharacteristics;
 import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconCharacteristics.MyReadCallBack;
 import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconConnection;
 import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconConnection.MyWriteCallback;
-
+/**
+ * Activity to modify beacon parameters.
+ * 
+ * @author gunnarforsgren
+ *
+ */
 public class ModifyActivity extends Activity {
 
 	protected static final String TAG = "ModifyActivity";
@@ -75,12 +80,13 @@ public class ModifyActivity extends Activity {
         		  uuid1.getText().toString()+
         		  uuid2.getText().toString();
           Log.d("ModifyActivity", "writeUUID="+UUID);
-          conn.writeUUID(UUID);
-          
+          conn.writeUUID(UUID); 
+        		  
   		  conn.connectGattToWrite(
   		    
   		   new AprilBeaconConnection.MyWriteCallback() {
-			@Override
+			
+  			@Override
 			public void onWriteMajorSuccess(final int oldMajor, final int newMajor) {
 			    ModifyActivity.this.runOnUiThread(
 			      new Runnable() {
@@ -92,6 +98,104 @@ public class ModifyActivity extends Activity {
 				  }
 			    );
 		    }
+  			
+  			@Override
+			public void onWriteMinorSuccess(final int oldMinor, final int newMinor) {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity",
+								"Wrote Minor value, oldMinor=" + oldMinor + "newMinor=" + newMinor);
+					}
+				  }
+			    );
+		    }
+			
+  			@Override
+			public void onWritePasswordSuccess() {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity", "Write Password Success");
+					}
+				  }
+			    );
+		    }
+			
+  			@Override
+			public void onErrorOfPassword() {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity", "Password Error");
+					}
+				  }
+			    );
+		    }
+  			
+			@Override
+			public void onErrorOfConnection() {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity", "Connection Error");
+					}
+				  }
+			    );
+		    }
+			
+			@Override
+			public void onErrorOfDiscoveredServices() {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity", "Error requesting Discovered Services");
+					}
+				  }
+			    );
+		    }
+  			
+			@Override
+			public void onWriteUUIDSuccess() {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity", "Success writing UUID");
+					}
+				  }
+			    );
+		    }
+  			
+			@Override
+			public void onWritewriteAdvertisingIntervalSuccessSuccess() {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity", "Success writing Advertising Interval");
+					}
+				  }
+			    );
+		    } 			
+			
+			@Override
+			public void onWritewriteTxPowerSuccessSuccess() {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity", "Success writing TX Power");
+					}
+				  }
+			    );
+		    } 			
+			
   		   } 
   		  );  
     	    }
@@ -103,17 +207,73 @@ public class ModifyActivity extends Activity {
         public void onClick(View v) {
             //Inform the user the button has been clicked
     		  Log.d("ModifyActivity","writeMajor()");
+    		  
+    		  
+        	  EditText majorText=(EditText)findViewById(R.id.major);
+          String majorv=
+        		  majorText.getText().toString();
+        		  
+          Log.d("ModifyActivity", "writeMajor="+majorv);
+          conn.writeMajor(new Integer(majorv).intValue()); 
+        		  
+  		  conn.connectGattToWrite(
+  		    
+  		   new AprilBeaconConnection.MyWriteCallback() {
+			
+  			@Override
+			public void onWriteMajorSuccess(final int oldMajor, final int newMajor) {
+			    ModifyActivity.this.runOnUiThread(
+			      new Runnable() {
+					@Override
+					public void run() {
+						Log.d("ModifyActivity",
+								"Wrote Major value, oldMajor=" + oldMajor + "newMajor=" + newMajor);
+					}
+				  }
+			    );
+		    }
+  		   }
+		);
+    		    
         }
       };
       
-    private View.OnClickListener writeMinor =
-    	  new View.OnClickListener() {
-    	  @Override
-        public void onClick(final View v) {
-            //Inform the user the button has been clicked
-    		  Log.d("ModifyActivity","writeMinor()");
-        }
-      };
+      private View.OnClickListener writeMinor = 
+        	  new View.OnClickListener() {
+        	  @Override
+            public void onClick(View v) {
+                //Inform the user the button has been clicked
+        		  Log.d("ModifyActivity","writeMinor()");
+        		  
+        		  
+            	  EditText minorText=(EditText)findViewById(R.id.minor);
+              String minorv=
+            		  minorText.getText().toString();
+            		  
+              Log.d("ModifyActivity", "writeMinor="+minorv);
+              conn.writeMinor(new Integer(minorv).intValue()); 
+            		  
+      		  conn.connectGattToWrite(
+      		    
+      		   new AprilBeaconConnection.MyWriteCallback() {
+    			
+      			@Override
+    			public void onWriteMinorSuccess(final int oldMinor, final int newMinor) {
+    			    ModifyActivity.this.runOnUiThread(
+    			      new Runnable() {
+    					@Override
+    					public void run() {
+    						Log.d("ModifyActivity",
+    								"Wrote Minor value, oldMinor=" + oldMinor + "newMinor=" + newMinor);
+    					}
+    				  }
+    			    );
+    		    }
+      		   }
+    		);
+        		    
+            }
+          };
     private View.OnClickListener writeTXPower = 
       new View.OnClickListener() {
     	  @Override
@@ -245,22 +405,22 @@ public class ModifyActivity extends Activity {
 	}
 
 	private void init() {
-		uuid = (EditText) findViewById(R.id.uuid);
+	/*	uuid = (EditText) findViewById(R.id.uuid);
 		major = (EditText) findViewById(R.id.major);
 		minor = (EditText) findViewById(R.id.minor);
 		battery = (TextView) findViewById(R.id.battery);
 		txpower = (TextView) findViewById(R.id.txpower);
-		advinterval = (TextView) findViewById(R.id.advinterval);
+		advinterval = (TextView) findViewById(R.id.advinterval); */
 		Bundle bundle = getIntent().getExtras();
 		beacon = bundle.getParcelable("beacon");
 		conn = new AprilBeaconConnection(this, beacon);
 
-		Log.i(TAG, beacon.getMacAddress());
-		Log.i(TAG, beacon.getMajor() + "");
-		Log.i(TAG, beacon.getMinor() + "");
-		Log.i(TAG, beacon.getMacAddress());
+		Log.i(TAG, "Mac address="+beacon.getMacAddress());
+		Log.i(TAG, "Major number="+beacon.getMajor());
+		Log.i(TAG, "Minor number="+beacon.getMinor());
+		Log.i(TAG, "Mac address="+beacon.getMacAddress());
 		String proximityUUID = beacon.getProximityUUID();
-		uuid.setText(proximityUUID);
+		/* uuid.setText(proximityUUID); */
 	}
 
 	public void sure(View v) {

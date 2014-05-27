@@ -25,9 +25,9 @@ import com.aprilbrother.aprilbrothersdk.Region;
 
 /**
  * 
- * 搜索展示beacon列表
+ * Radiofyr list beacons
  * 
- * @author 周超
+ * @author Gunnar Forsgren, Mobimation AB, Sweden
  * 
  */
 public class BeaconList extends Activity {
@@ -52,7 +52,7 @@ public class BeaconList extends Activity {
 	}
 
 	/**
-	 * 初始化操作
+	 * Init beacon list operation
 	 */
 	private void init() {
 		myBeacons = new ArrayList<Beacon>();
@@ -96,7 +96,7 @@ public class BeaconList extends Activity {
 	}
 
 	/**
-	 * 连接服务 开始搜索beacon
+	 * Connect to scanning service
 	 */
 	private void connectToService() {
 		getActionBar().setSubtitle("Scanning...");
