@@ -3,6 +3,8 @@ package com.mobimation.radiofyr;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.text.TextUtils;
@@ -41,6 +43,8 @@ public class ModifyActivity extends Activity {
 	private TextView battery;
 	private TextView txpower;
 	private TextView advinterval;
+	
+	private String oldPassword;
 
 	private AprilBeaconCharacteristics read;
 
@@ -80,12 +84,11 @@ public class ModifyActivity extends Activity {
         		  uuid1.getText().toString()+
         		  uuid2.getText().toString();
           Log.d("ModifyActivity", "writeUUID="+UUID);
+          showEnterDialog();  // Prompt for current password
           conn.writeUUID(UUID); 
         		  
   		  conn.connectGattToWrite(
-  		    
-  		   new AprilBeaconConnection.MyWriteCallback() {
-			
+  		   new MyWriteCallback() {
   			@Override
 			public void onWriteMajorSuccess(final int oldMajor, final int newMajor) {
 			    ModifyActivity.this.runOnUiThread(
@@ -113,7 +116,8 @@ public class ModifyActivity extends Activity {
 		    }
 			
   			@Override
-			public void onWritePasswordSuccess() {
+			public void onWriteNewPasswordSuccess(final String oldPassword, final String newPassword) {
+  				super.onWriteNewPasswordSuccess(oldPassword, newPassword);
 			    ModifyActivity.this.runOnUiThread(
 			      new Runnable() {
 					@Override
@@ -173,7 +177,7 @@ public class ModifyActivity extends Activity {
 		    }
   			
 			@Override
-			public void onWritewriteAdvertisingIntervalSuccessSuccess() {
+			public void onWriteAdvertisingIntervalSuccess() {
 			    ModifyActivity.this.runOnUiThread(
 			      new Runnable() {
 					@Override
@@ -185,7 +189,7 @@ public class ModifyActivity extends Activity {
 		    } 			
 			
 			@Override
-			public void onWritewriteTxPowerSuccessSuccess() {
+			public void onWriteTxPowerSuccess() {
 			    ModifyActivity.this.runOnUiThread(
 			      new Runnable() {
 					@Override
@@ -196,7 +200,7 @@ public class ModifyActivity extends Activity {
 			    );
 		    } 			
 			
-  		   } 
+  		   },oldPassword 
   		  );  
     	    }
   	  };
@@ -212,13 +216,11 @@ public class ModifyActivity extends Activity {
         	  EditText majorText=(EditText)findViewById(R.id.major);
           String majorv=
         		  majorText.getText().toString();
-        		  
+          showEnterDialog(); 
           Log.d("ModifyActivity", "writeMajor="+majorv);
           conn.writeMajor(new Integer(majorv).intValue()); 
         		  
-  		  conn.connectGattToWrite(
-  		    
-  		   new AprilBeaconConnection.MyWriteCallback() {
+  		  conn.connectGattToWrite(new MyWriteCallback() {
 			
   			@Override
 			public void onWriteMajorSuccess(final int oldMajor, final int newMajor) {
@@ -232,7 +234,7 @@ public class ModifyActivity extends Activity {
 				  }
 			    );
 		    }
-  		   }
+  		   }, oldPassword
 		);
     		    
         }
@@ -249,7 +251,7 @@ public class ModifyActivity extends Activity {
             	  EditText minorText=(EditText)findViewById(R.id.minor);
               String minorv=
             		  minorText.getText().toString();
-            		  
+              showEnterDialog(); 
               Log.d("ModifyActivity", "writeMinor="+minorv);
               conn.writeMinor(new Integer(minorv).intValue()); 
             		  
@@ -259,17 +261,15 @@ public class ModifyActivity extends Activity {
     			
       			@Override
     			public void onWriteMinorSuccess(final int oldMinor, final int newMinor) {
-    			    ModifyActivity.this.runOnUiThread(
-    			      new Runnable() {
+    			    ModifyActivity.this.runOnUiThread(new Runnable() {
     					@Override
     					public void run() {
     						Log.d("ModifyActivity",
     								"Wrote Minor value, oldMinor=" + oldMinor + "newMinor=" + newMinor);
     					}
-    				  }
-    			    );
+    				});
     		    }
-      		   }
+      	  }, oldPassword
     		);
         		    
             }
@@ -403,7 +403,38 @@ public class ModifyActivity extends Activity {
 			}
 		}, READBATTERY);
 	}
+	/**
+	 * Prompt for current password
+	 */
+	private EditText et_pwd;
+	private Button bt_ok;
+	private Button bt_cancel;
+	private AlertDialog dialog;
+	private void showEnterDialog() {
 
+		AlertDialog.Builder builder = new Builder(this);
+		View view = View.inflate(this, R.layout.dialog_enter_password, null);
+		et_pwd = (EditText) view.findViewById(R.id.et_pwd);
+		bt_ok = (Button) view.findViewById(R.id.bt_ok);
+		bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
+		bt_cancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		bt_ok.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				oldPassword = et_pwd.getText().toString().trim();
+				aprilWrite();
+				dialog.dismiss();
+			}
+		});
+		dialog = builder.create();
+		dialog.setView(view, 0, 0, 0, 0);
+		dialog.show();
+	}
 	private void init() {
 	/*	uuid = (EditText) findViewById(R.id.uuid);
 		major = (EditText) findViewById(R.id.major);
@@ -471,7 +502,7 @@ public class ModifyActivity extends Activity {
 					}
 				});
 			}
-		});
+		}, oldPassword);
 	}
 
 	@Override
