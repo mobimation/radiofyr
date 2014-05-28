@@ -427,6 +427,7 @@ public class ModifyActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				oldPassword = et_pwd.getText().toString().trim();
+				Log.d("ModifyActivity", "Set password="+oldPassword);
 				aprilWrite();
 				dialog.dismiss();
 			}
