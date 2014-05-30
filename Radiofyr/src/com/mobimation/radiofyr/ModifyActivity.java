@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.mobimation.radiofyr.R;
 import com.aprilbrother.aprilbrothersdk.Beacon;
 import com.aprilbrother.aprilbrothersdk.BeaconManager;
+import com.aprilbrother.aprilbrothersdk.BeaconManager.ErrorListener;
 import com.aprilbrother.aprilbrothersdk.BeaconManager.MonitoringListener;
 import com.aprilbrother.aprilbrothersdk.Region;
 import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconCharacteristics;
@@ -571,6 +572,12 @@ private void writeToBeacon(AprilBeaconConnection c) {
 				Toast.makeText(getApplicationContext(),
 				"Entered " +r.getIdentifier()+"(Region "+r.getMajor()+":"+r.getMinor()+") "+beacons.size()+" beacons",0)
 						.show();
+			}
+		});
+		beaconManager.setErrorListener(new ErrorListener() {
+			@Override
+			public void onError(java.lang.Integer paramInteger) {
+				Log.d("ModifyActivity", "AprilBrother BeaconManager - onError() says:"+paramInteger);
 			}
 		});
 
