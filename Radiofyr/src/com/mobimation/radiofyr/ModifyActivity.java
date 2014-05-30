@@ -21,11 +21,13 @@ import com.aprilbrother.aprilbrothersdk.Beacon;
 import com.aprilbrother.aprilbrothersdk.BeaconManager;
 import com.aprilbrother.aprilbrothersdk.BeaconManager.ErrorListener;
 import com.aprilbrother.aprilbrothersdk.BeaconManager.MonitoringListener;
+import com.aprilbrother.aprilbrothersdk.BeaconManager.ServiceReadyCallback;
 import com.aprilbrother.aprilbrothersdk.Region;
 import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconCharacteristics;
 import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconCharacteristics.MyReadCallBack;
 import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconConnection;
 import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconConnection.MyWriteCallback;
+import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconConnection.WriteCallback;
 /**
  * Activity to modify beacon parameters.
  * 
@@ -35,6 +37,7 @@ import com.aprilbrother.aprilbrothersdk.connection.AprilBeaconConnection.MyWrite
 public class ModifyActivity extends Activity {
 
 	protected static final String TAG = "ModifyActivity";
+	private ModifyActivity act;
 	private EditText uuid;
 	private EditText major;
 	private EditText minor;
@@ -72,6 +75,7 @@ public class ModifyActivity extends Activity {
 		findViewById(R.id.buttonFgWriteScanPeriod).setOnClickListener(writeFgScanWait);
 		findViewById(R.id.buttonBgWriteScanPeriod).setOnClickListener(writeBgScanWait);
 		findViewById(R.id.buttonWritePassword).setOnClickListener(writePassword);
+		act=this;
 		init();
 	}
 	/**
@@ -85,12 +89,16 @@ public class ModifyActivity extends Activity {
         	  EditText uuid1=(EditText)findViewById(R.id.uuidhi);
           EditText uuid2=(EditText)findViewById(R.id.uuidlo);
           String UUID=
-        		  uuid1.getText().toString()+
-        		  uuid2.getText().toString();
+        		  uuid1.getText().toString()+"-"+uuid2.getText().toString();
           Log.d("ModifyActivity", "writeUUID="+UUID);
-          showEnterDialog();  // Prompt for current password
-          conn.writeUUID(UUID); 
-        	  writeToBeacon(conn);	    
+//        showEnterDialog();  // Prompt for current password
+          if (conn==null)
+        	    Log.d("ModifyActivity", "*****WARNING: AprilBeaconConnection NULL value *****");
+          else {  
+        	    conn = new AprilBeaconConnection(act, beacon);
+            conn.writeUUID(UUID); 
+        	    writeToBeacon(conn);
+          }
         }
       };
       
@@ -104,8 +112,21 @@ public class ModifyActivity extends Activity {
           	  EditText major=(EditText)findViewById(R.id.major);
             int majorNo=Integer.valueOf(major.getText().toString());
             Log.d("ModifyActivity", "writeMajor="+majorNo);
+            conn.close();
+            conn = new AprilBeaconConnection(act, beacon);
+            
+            AprilBeaconConnection.MyWriteCallback mwc=new MyWriteCallback() {
+            	 @Override
+            	 public void onErrorOfConnection() {
+            		 Log.d("ModifyActivity", "Yikes. error of connection !!");
+            	 }
+            	 public void onWriteMajorSuccess(int oldMajor, int newMajor) {
+            		 Log.d("ModifyActivity", "Major written ok, "+oldMajor+" replaced with "+newMajor);
+            	 }
+            };
             conn.writeMajor(majorNo); 
-          	writeToBeacon(conn);	    
+            conn.connectGattToWrite(mwc, "AprilBrother");
+ //         	writeToBeacon(conn);	    
           }
         };
 
@@ -119,6 +140,8 @@ public class ModifyActivity extends Activity {
          EditText minor=(EditText)findViewById(R.id.minor);
          int minorNo=Integer.valueOf(minor.getText().toString());
          Log.d("ModifyActivity", "writeMinor="+minorNo);
+         conn.close();
+         conn = new AprilBeaconConnection(act, beacon);
          conn.writeMinor(minorNo); 
          writeToBeacon(conn);	    
        }
@@ -217,103 +240,47 @@ private void writeToBeacon(AprilBeaconConnection c) {
 	  		   new MyWriteCallback() {
 	  			@Override
 				public void onWriteMajorSuccess(final int oldMajor, final int newMajor) {
-				    ModifyActivity.this.runOnUiThread(
-				      new Runnable() {
-						@Override
-						public void run() {
-							Log.d("ModifyActivity",
+					Log.d("ModifyActivity",
 									"Wrote Major value, oldMajor=" + oldMajor + "newMajor=" + newMajor);
-						}
-					  }
-				    );
 			    }
 	  			
 	  			@Override
 				public void onWriteMinorSuccess(final int oldMinor, final int newMinor) {
-				    ModifyActivity.this.runOnUiThread(
-				      new Runnable() {
-						@Override
-						public void run() {
 							Log.d("ModifyActivity",
 									"Wrote Minor value, oldMinor=" + oldMinor + "newMinor=" + newMinor);
-						}
-					  }
-				    );
 			    }
 				
 	  			@Override
 				public void onWriteNewPasswordSuccess(final String oldPassword, final String newPassword) {
-	  				super.onWriteNewPasswordSuccess(oldPassword, newPassword);
-				    ModifyActivity.this.runOnUiThread(
-				      new Runnable() {
-						@Override
-						public void run() {
-							Log.d("ModifyActivity", "Write Password Success");
-						}
-					  }
-				    );
+	  				// super.onWriteNewPasswordSuccess(oldPassword, newPassword);
+					Log.d("ModifyActivity", "Write Password Success");
 			    }
 				
 	  			@Override
 				public void onErrorOfPassword() {
-				    ModifyActivity.this.runOnUiThread(
-				      new Runnable() {
-						@Override
-						public void run() {
-							Log.d("ModifyActivity", "Password Error");
-						}
-					  }
-				    );
+					Log.d("ModifyActivity", "Password Error");
 			    }
 	  			
 				@Override
 				public void onErrorOfConnection() {
-				    ModifyActivity.this.runOnUiThread(
-				      new Runnable() {
-						@Override
-						public void run() {
-							Log.d("ModifyActivity", "Connection Error");
-						}
-					  }
-				    );
+					Log.d("ModifyActivity", "Connection Error");
 			    }
 				
 				@Override
 				public void onErrorOfDiscoveredServices() {
-				    ModifyActivity.this.runOnUiThread(
-				      new Runnable() {
-						@Override
-						public void run() {
-							Log.d("ModifyActivity", "Error requesting Discovered Services");
-						}
-					  }
-				    );
+					Log.d("ModifyActivity", "Error requesting Discovered Services");
 			    }
 	  			
 				@Override
 				public void onWriteUUIDSuccess() {
-				    ModifyActivity.this.runOnUiThread(
-				      new Runnable() {
-						@Override
-						public void run() {
-							Log.d("ModifyActivity", "Success writing UUID");
-						}
-					  }
-				    );
+					Log.d("ModifyActivity", "Success writing UUID");
 			    }
 	  			
 				@Override
 				public void onWriteAdvertisingIntervalSuccess() {
-				    ModifyActivity.this.runOnUiThread(
-				      new Runnable() {
-						@Override
-						public void run() {
-							Log.d("ModifyActivity", "Success writing Advertising Interval");
-						}
-					  }
-				    );
+					Log.d("ModifyActivity", "Success writing Advertising Interval");
 			    } 			
-				
+/*				
 				@Override
 				public void onWriteTxPowerSuccess() {
 				    ModifyActivity.this.runOnUiThread(
@@ -324,7 +291,17 @@ private void writeToBeacon(AprilBeaconConnection c) {
 						}
 					  }
 				    );
-			    } 			
+			    }
+*/				
+				@Override
+				public void onWriteTxPowerSuccess() {
+					Log.d("ModifyActivity", "Success writing TX Power");
+			    }
+
+				@Override
+				public void onWritePasswordSuccess() {
+					Log.d("ModifyActivity", "Success writing TX Power");
+				} 			
 				
 	  		   },oldPassword 
 	  		  );  
@@ -473,7 +450,6 @@ private void writeToBeacon(AprilBeaconConnection c) {
 		Log.i(TAG, "Mac address="+beacon.getMacAddress());
 		Log.i(TAG, "Major number="+beacon.getMajor());
 		Log.i(TAG, "Minor number="+beacon.getMinor());
-		Log.i(TAG, "Mac address="+beacon.getMacAddress());
 		String proximityUUID = beacon.getProximityUUID();
 		/* uuid.setText(proximityUUID); */
 	}
