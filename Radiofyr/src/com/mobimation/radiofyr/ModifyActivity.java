@@ -112,7 +112,6 @@ public class ModifyActivity extends Activity {
           	  EditText major=(EditText)findViewById(R.id.major);
             int majorNo=Integer.valueOf(major.getText().toString());
             Log.d("ModifyActivity", "writeMajor="+majorNo);
-            conn.close();
             conn = new AprilBeaconConnection(act, beacon);
             
             AprilBeaconConnection.MyWriteCallback mwc=new MyWriteCallback() {
