@@ -278,7 +278,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Advertising Interval"
+                        android:text="Advertising Interval (ms)"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
@@ -333,26 +333,50 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="FG Scan Period"
+                        android:text="FG Scan/Wait (ms)"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/fgScanPeriod"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:alpha="0.5"
-                        android:background="@drawable/rounded_textfield"
-                        android:contentDescription="Foreground Scan Period"
-                        android:inputType="numberDecimal"
-                        android:paddingBottom="0dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="0dp"
-                        android:text="500"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" >
 
+                        <EditText
+                            android:id="@+id/fgScanPeriod"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:alpha="0.5"
+                            android:background="@drawable/rounded_textfield"
+                            android:contentDescription="Background Scan Period"
+                            android:inputType="numberDecimal"
+                            android:paddingBottom="0dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="0dp"
+                            android:text="500"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/fgWaitPeriod"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:alpha="0.5"
+                            android:background="@drawable/rounded_textfield"
+                            android:contentDescription="Background Scan Period"
+                            android:inputType="numberDecimal"
+                            android:paddingBottom="0dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="0dp"
+                            android:text="500"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -362,7 +386,7 @@
                     android:orientation="vertical" >
 
                     <Button
-                        android:id="@+id/buttonWriteFgScanPeriod"
+                        android:id="@+id/buttonFgWriteScanPeriod"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_marginTop="17dp"
@@ -371,7 +395,6 @@
                         android:text="Spara"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />
-
                 </LinearLayout>
             </LinearLayout>
 
@@ -388,25 +411,51 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="BG Scan Period"
+                        android:text="BG Scan/Wait (ms)"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/bgScanPeriod"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:alpha="0.5"
-                        android:background="@drawable/rounded_textfield"
-                        android:contentDescription="Background Scan Period"
-                        android:inputType="numberDecimal"
-                        android:paddingBottom="0dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="0dp"
-                        android:text="500"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" >
+
+                        <EditText
+                            android:id="@+id/bgScanPeriod"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:alpha="0.5"
+                            android:background="@drawable/rounded_textfield"
+                            android:contentDescription="Background Scan Period"
+                            android:inputType="numberDecimal"
+                            android:paddingBottom="0dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="0dp"
+                            android:text="500"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/bgWaitPeriod"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:alpha="0.5"
+                            android:background="@drawable/rounded_textfield"
+                            android:contentDescription="Background Scan Period"
+                            android:inputType="numberDecimal"
+                            android:paddingBottom="0dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="0dp"
+                            android:text="500"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -417,7 +466,7 @@
                     android:orientation="vertical" >
 
                     <Button
-                        android:id="@+id/buttonWriteBgScanPeriod"
+                        android:id="@+id/buttonBgWriteScanPeriod"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_marginTop="17dp"
@@ -426,10 +475,66 @@
                         android:text="Spara"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />
-
                 </LinearLayout>
             </LinearLayout>
+<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="184dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.7"
+                        android:background="@drawable/rounded_textfield"
+                        android:contentDescription="Proximity UUID"
+                        android:digits="0123456789ABCDEF"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:paddingBottom="0dp"
+                        android:paddingTop="0dp"
+                        android:text="AprilBeacon"
+                        android:textAppearance="?android:attr/textAppearance"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:typeface="monospace" >
+
+                        <requestFocus />
+                    </EditText>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/buttonWritePassword"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="17dp"
+                        android:alpha="0.7"
+                        android:background="@drawable/simpleshape"
+                        android:text="Spara"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
    </ScrollView>

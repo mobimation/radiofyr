@@ -68,11 +68,14 @@ public class ModifyActivity extends Activity {
 		findViewById(R.id.buttonWriteMinor).setOnClickListener(writeMinor);
 		findViewById(R.id.buttonWriteTXPower).setOnClickListener(writeTXPower);
 		findViewById(R.id.buttonWriteAdvInterval).setOnClickListener(writeAdvInterval);
-		findViewById(R.id.buttonWriteFgScanPeriod).setOnClickListener(writeFgScanPeriod);
-		findViewById(R.id.buttonWriteBgScanPeriod).setOnClickListener(writeBgScanPeriod);
+		findViewById(R.id.buttonFgWriteScanPeriod).setOnClickListener(writeFgScanWait);
+		findViewById(R.id.buttonBgWriteScanPeriod).setOnClickListener(writeBgScanWait);
+		findViewById(R.id.buttonWritePassword).setOnClickListener(writePassword);
 		init();
 	}
-
+	/**
+	 * Handle write UUID
+	 */
     private View.OnClickListener writeUUID = 
     	  new View.OnClickListener() {
     		@Override
@@ -86,226 +89,243 @@ public class ModifyActivity extends Activity {
           Log.d("ModifyActivity", "writeUUID="+UUID);
           showEnterDialog();  // Prompt for current password
           conn.writeUUID(UUID); 
-        		  
-  		  conn.connectGattToWrite(
-  		   new MyWriteCallback() {
-  			@Override
-			public void onWriteMajorSuccess(final int oldMajor, final int newMajor) {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity",
-								"Wrote Major value, oldMajor=" + oldMajor + "newMajor=" + newMajor);
-					}
-				  }
-			    );
-		    }
-  			
-  			@Override
-			public void onWriteMinorSuccess(final int oldMinor, final int newMinor) {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity",
-								"Wrote Minor value, oldMinor=" + oldMinor + "newMinor=" + newMinor);
-					}
-				  }
-			    );
-		    }
-			
-  			@Override
-			public void onWriteNewPasswordSuccess(final String oldPassword, final String newPassword) {
-  				super.onWriteNewPasswordSuccess(oldPassword, newPassword);
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity", "Write Password Success");
-					}
-				  }
-			    );
-		    }
-			
-  			@Override
-			public void onErrorOfPassword() {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity", "Password Error");
-					}
-				  }
-			    );
-		    }
-  			
-			@Override
-			public void onErrorOfConnection() {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity", "Connection Error");
-					}
-				  }
-			    );
-		    }
-			
-			@Override
-			public void onErrorOfDiscoveredServices() {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity", "Error requesting Discovered Services");
-					}
-				  }
-			    );
-		    }
-  			
-			@Override
-			public void onWriteUUIDSuccess() {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity", "Success writing UUID");
-					}
-				  }
-			    );
-		    }
-  			
-			@Override
-			public void onWriteAdvertisingIntervalSuccess() {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity", "Success writing Advertising Interval");
-					}
-				  }
-			    );
-		    } 			
-			
-			@Override
-			public void onWriteTxPowerSuccess() {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity", "Success writing TX Power");
-					}
-				  }
-			    );
-		    } 			
-			
-  		   },oldPassword 
-  		  );  
-    	    }
-  	  };
-    
-    private View.OnClickListener writeMajor = 
-    	  new View.OnClickListener() {
-    	  @Override
-        public void onClick(View v) {
-            //Inform the user the button has been clicked
-    		  Log.d("ModifyActivity","writeMajor()");
-    		  
-    		  
-        	  EditText majorText=(EditText)findViewById(R.id.major);
-          String majorv=
-        		  majorText.getText().toString();
-          showEnterDialog(); 
-          Log.d("ModifyActivity", "writeMajor="+majorv);
-          conn.writeMajor(new Integer(majorv).intValue()); 
-        		  
-  		  conn.connectGattToWrite(new MyWriteCallback() {
-			
-  			@Override
-			public void onWriteMajorSuccess(final int oldMajor, final int newMajor) {
-			    ModifyActivity.this.runOnUiThread(
-			      new Runnable() {
-					@Override
-					public void run() {
-						Log.d("ModifyActivity",
-								"Wrote Major value, oldMajor=" + oldMajor + "newMajor=" + newMajor);
-					}
-				  }
-			    );
-		    }
-  		   }, oldPassword
-		);
-    		    
+        	  writeToBeacon(conn);	    
         }
       };
       
-      private View.OnClickListener writeMinor = 
-        	  new View.OnClickListener() {
-        	  @Override
-            public void onClick(View v) {
-                //Inform the user the button has been clicked
-        		  Log.d("ModifyActivity","writeMinor()");
-        		  
-        		  
-            	  EditText minorText=(EditText)findViewById(R.id.minor);
-              String minorv=
-            		  minorText.getText().toString();
-              showEnterDialog(); 
-              Log.d("ModifyActivity", "writeMinor="+minorv);
-              conn.writeMinor(new Integer(minorv).intValue()); 
-            		  
-      		  conn.connectGattToWrite(
-      		    
-      		   new AprilBeaconConnection.MyWriteCallback() {
-    			
-      			@Override
-    			public void onWriteMinorSuccess(final int oldMinor, final int newMinor) {
-    			    ModifyActivity.this.runOnUiThread(new Runnable() {
-    					@Override
-    					public void run() {
-    						Log.d("ModifyActivity",
-    								"Wrote Minor value, oldMinor=" + oldMinor + "newMinor=" + newMinor);
-    					}
-    				});
-    		    }
-      	  }, oldPassword
-    		);
-        		    
-            }
-          };
+  	/**
+  	 * Handle write Major number
+  	 */
+      private View.OnClickListener writeMajor = 
+      	  new View.OnClickListener() {
+      		@Override
+          public void onClick(View v) {
+          	  EditText major=(EditText)findViewById(R.id.major);
+            int majorNo=Integer.valueOf(major.getText().toString());
+            Log.d("ModifyActivity", "writeMajor="+majorNo);
+            conn.writeMajor(majorNo); 
+          	writeToBeacon(conn);	    
+          }
+        };
+
+    	/**
+     * Handle write Minor number
+     */
+     private View.OnClickListener writeMinor = 
+       new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+         EditText minor=(EditText)findViewById(R.id.minor);
+         int minorNo=Integer.valueOf(minor.getText().toString());
+         Log.d("ModifyActivity", "writeMinor="+minorNo);
+         conn.writeMinor(minorNo); 
+         writeToBeacon(conn);	    
+       }
+     };
+      
+    /**
+     * Handle write TX Power
+     */
     private View.OnClickListener writeTXPower = 
       new View.OnClickListener() {
     	  @Override
         public void onClick(final View v) {
-            //Inform the user the button has been clicked
+    		  EditText txPower=(EditText)findViewById(R.id.txpower);
+    		  int txPowerNo=Integer.valueOf(txPower.getText().toString());
     		  Log.d("ModifyActivity","writeTxPower()");
+    		  conn.writeTxPower(txPowerNo);
+    		  writeToBeacon(conn);
         }
       };
+      
+    /**
+     * Handle write Advertising Interval
+     */
     private View.OnClickListener writeAdvInterval = 
      new View.OnClickListener() {
     	  @Override
         public void onClick(final View v) {
-            //Inform the user the button has been clicked    
+    		  EditText advInterval=(EditText)findViewById(R.id.advinterval);
+    		  int advIntervalNo=Integer.valueOf(advInterval.getText().toString());
     		  Log.d("ModifyActivity","writeAdvInterval()");
+    		  conn.writeAdvertisingInterval(advIntervalNo);
+    		  writeToBeacon(conn);
         }
      };
-    private View.OnClickListener writeFgScanPeriod =
+     
+    /**
+     * Handle write Scan Periods
+     * The scan period is the duration for a beacon scan 
+     */ 
+    private View.OnClickListener writeFgScanWait =
     	 new View.OnClickListener() {
     	  @Override
         public void onClick(final View v) {
-            //Inform the user the button has been clicked 
-    		  Log.d("ModifyActivity","writeFgScanPeriod()");
+    		  EditText fgScanPeriod=(EditText)findViewById(R.id.fgScanPeriod);
+    		  EditText fgScanWait=(EditText)findViewById(R.id.fgWaitPeriod);
+    		  
+    		  long fgScanPeriodMs=Long.valueOf(fgScanPeriod.getText().toString());
+    		  long fgScanWaitMs=Long.valueOf(fgScanWait.getText().toString());
+    		  Log.d("ModifyActivity","Foreground Scan/Wait (ms)= "+fgScanPeriodMs+"/"+fgScanWaitMs);
+    		  beaconManager.setForegroundScanPeriod(fgScanPeriodMs,fgScanWaitMs);
+    		  // TODO close connection and reconnect with new values in effect
         }
      };
-    private View.OnClickListener writeBgScanPeriod = 
-    	 new View.OnClickListener() {
-    	  @Override
-        public void onClick(final View v) {
-    		  Log.d("ModifyActivity","writeBgScanPeriod()");
-            //Inform the user the button has been clicked               
-        }
-     };
+     
+     /**
+      * Handle write Wait Periods
+      * The wait period is the pause time between beacon scans
+      */ 
+     private View.OnClickListener writeBgScanWait =
+    		 new View.OnClickListener() {
+     	  @Override
+         public void onClick(final View v) {
+     		  EditText bgScanPeriod=(EditText)findViewById(R.id.bgScanPeriod);
+     		  EditText bgScanWait=(EditText)findViewById(R.id.bgWaitPeriod);
+     		  long bgScanPeriodMs=Long.valueOf(bgScanPeriod.getText().toString());
+     		  long bgScanWaitMs=Long.valueOf(bgScanWait.getText().toString());
+     		  Log.d("ModifyActivity","Background Scan/Wait (ms)= "+bgScanPeriodMs+"/"+bgScanWaitMs);
+     		  beaconManager.setBackgroundScanPeriod(bgScanPeriodMs,bgScanWaitMs);
+    		  // TODO close connection and reconnect with new values in effect
+         }
+      };
+      
+      /**
+       * Handle change password
+       * The password used for authorizing setting changes
+       */ 
+      private View.OnClickListener writePassword =
+     		 new View.OnClickListener() {
+      	  @Override
+          public void onClick(final View v) {
+      		EditText password=(EditText)findViewById(R.id.password);
+      		oldPassword=password.getText().toString();
+      		Log.d("ModifyActivity", "New password set:"+oldPassword);
+          }
+       };
+ 
+     /**
+      * Write outstanding parameters to the beacon
+      * and handle callbacks.
+      * @param c Connection reference to already connected beacon
+      */
+private void writeToBeacon(AprilBeaconConnection c) {
+	c.connectGattToWrite(
+	  		   new MyWriteCallback() {
+	  			@Override
+				public void onWriteMajorSuccess(final int oldMajor, final int newMajor) {
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity",
+									"Wrote Major value, oldMajor=" + oldMajor + "newMajor=" + newMajor);
+						}
+					  }
+				    );
+			    }
+	  			
+	  			@Override
+				public void onWriteMinorSuccess(final int oldMinor, final int newMinor) {
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity",
+									"Wrote Minor value, oldMinor=" + oldMinor + "newMinor=" + newMinor);
+						}
+					  }
+				    );
+			    }
+				
+	  			@Override
+				public void onWriteNewPasswordSuccess(final String oldPassword, final String newPassword) {
+	  				super.onWriteNewPasswordSuccess(oldPassword, newPassword);
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity", "Write Password Success");
+						}
+					  }
+				    );
+			    }
+				
+	  			@Override
+				public void onErrorOfPassword() {
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity", "Password Error");
+						}
+					  }
+				    );
+			    }
+	  			
+				@Override
+				public void onErrorOfConnection() {
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity", "Connection Error");
+						}
+					  }
+				    );
+			    }
+				
+				@Override
+				public void onErrorOfDiscoveredServices() {
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity", "Error requesting Discovered Services");
+						}
+					  }
+				    );
+			    }
+	  			
+				@Override
+				public void onWriteUUIDSuccess() {
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity", "Success writing UUID");
+						}
+					  }
+				    );
+			    }
+	  			
+				@Override
+				public void onWriteAdvertisingIntervalSuccess() {
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity", "Success writing Advertising Interval");
+						}
+					  }
+				    );
+			    } 			
+				
+				@Override
+				public void onWriteTxPowerSuccess() {
+				    ModifyActivity.this.runOnUiThread(
+				      new Runnable() {
+						@Override
+						public void run() {
+							Log.d("ModifyActivity", "Success writing TX Power");
+						}
+					  }
+				    );
+			    } 			
+				
+	  		   },oldPassword 
+	  		  );  
+}
      
 	public void getBattery(View v) {
 		setBattery();
@@ -538,14 +558,16 @@ public class ModifyActivity extends Activity {
 		beaconManager.setMonitoringListener(new MonitoringListener() {
 
 			@Override
-			public void onExitedRegion(Region arg0) {
-				Toast.makeText(getApplicationContext(), "你离开beacon范围", 0)
+			public void onExitedRegion(Region r) {
+				Toast.makeText(getApplicationContext(), 
+				"Exited " +r.getIdentifier()+"(Region "+r.getMajor()+":"+r.getMinor()+")",0)
 						.show();
 			}
 
 			@Override
-			public void onEnteredRegion(Region arg0, List<Beacon> arg1) {
-				Toast.makeText(getApplicationContext(), "你进入beacon范围", 0)
+			public void onEnteredRegion(Region r, List<Beacon> beacons) {
+				Toast.makeText(getApplicationContext(),
+				"Entered " +r.getIdentifier()+"(Region "+r.getMajor()+":"+r.getMinor()+") "+beacons.size()+" beacons",0)
 						.show();
 			}
 		});
