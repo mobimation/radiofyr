@@ -210,6 +210,8 @@ public class ModifyActivity extends Activity {
       * @param c Connection reference to already connected beacon
       */
 private void writeToBeacon(AprilBeaconConnection c) {
+	EditText pw=(EditText)findViewById(R.id.password);
+	oldPassword=pw.getText().toString();
 	c.connectGattToWrite(
 	  		   new MyWriteCallback() {
 	  			@Override
