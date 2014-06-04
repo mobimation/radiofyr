@@ -5,6 +5,8 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.text.TextUtils;
@@ -38,6 +40,7 @@ public class ModifyActivity extends Activity {
 
 	protected static final String TAG = "ModifyActivity";
 	private ModifyActivity act;
+	private Context context;
 	private EditText uuid;
 	private EditText major;
 	private EditText minor;
@@ -66,6 +69,7 @@ public class ModifyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_modify2);
 		super.onCreate(savedInstanceState);
+		context=this.getApplicationContext();
 		// Wire up buttons to handlers
 		findViewById(R.id.buttonWriteUUID) .setOnClickListener(writeUUID);
 		findViewById(R.id.buttonWriteMajor).setOnClickListener(writeMajor);
@@ -90,15 +94,27 @@ public class ModifyActivity extends Activity {
           EditText uuid2=(EditText)findViewById(R.id.uuidlo);
           String UUID=
         		  uuid1.getText().toString()+"-"+uuid2.getText().toString();
-          Log.d("ModifyActivity", "writeUUID="+UUID);
-//        showEnterDialog();  // Prompt for current password
-          if (conn==null)
-        	    Log.d("ModifyActivity", "*****WARNING: AprilBeaconConnection NULL value *****");
-          else {  
-        	    conn = new AprilBeaconConnection(act, beacon);
-            conn.writeUUID(UUID); 
-        	    writeToBeacon(conn);
+          if (UUID.contains("-")) {
+           // UUID string expanded into ********-****-****-****-************ format
+           String formattedUUID=
+        		  UUID.substring(0, 7)+ "-"+
+        		  UUID.substring(8,11)+ "-"+
+        		  UUID.substring(12,15)+"-"+
+        		  UUID.substring(16,19)+"-"+
+        		  UUID.substring(20,31);
+        		
+            Log.d("ModifyActivity", "writeUUID="+formattedUUID);
+//          showEnterDialog();  // Prompt for current password
+            if (conn==null)
+        	      Log.d("ModifyActivity", "*****WARNING: AprilBeaconConnection NULL value *****");
+            else {  
+        	      conn = new AprilBeaconConnection(act, beacon);
+              conn.writeUUID(formattedUUID); 
+        	      writeToBeacon(conn);
+            }
           }
+          else
+        	    alert("UUID string shall be a string of 32 hex characters");
         }
       };
       
@@ -569,5 +585,24 @@ private void writeToBeacon(AprilBeaconConnection c) {
 			e.printStackTrace();
 		}
 		super.onStop();
+	}
+	private void alert(String msg) {
+		// Pop up a dialog with a message
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		// set the title of the Alert Dialog
+		alertDialogBuilder.setTitle("Message");		
+		// set dialog message		
+		alertDialogBuilder
+		.setMessage(msg)
+	    .setCancelable(true)
+		.setPositiveButton("Ok",	
+		  new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+			  dialog.cancel();			
+			}
+		  }
+		);
+		AlertDialog alertDialog = alertDialogBuilder.create();
+	    alertDialog.show();
 	}
 }

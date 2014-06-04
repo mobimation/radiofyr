@@ -4,7 +4,37 @@
     <string name="app_name">Radiofyr</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="txPowerPrompt">Transmit Power</string>
+    <string name="txPower">Transmit Power</string>
+    <string name="beaconTxPower">Beacon Transmit Power</string>
+    <string name="proxUUID">Proximity UUID (16 hex values)</string>
+    <string name="hiUUID">3ad10f4300000000</string>
+    <string name="loUUID">0000000000000001</string>
+    <string name="majorno">Major Number</string>
+    <string name="defaultminor">1</string>
+    <string name="defaultmajor">22</string>
+    <string name="defaultadvint">22</string>
+    <string name="minorno">Minor Number</string>
+    <string name="advinterval">Advertising Interval (ms)</string>
+    <string name="fgscanwait">FG Scan/Wait Interval (ms)</string>
+    <string name="hintbgscanperiod">Background Scan Period (ms)</string>
+    <string name="hintbgwaitperiod">Background Wait Period (ms)</string>
+    <string name="hintfgscanperiod">Foreground Scan Period (ms)</string>
+    <string name="hintfgwaitperiod">Foreground Wait Period (ms)</string>
+    <string name="defaultfgscan">500</string>
+    <string name="defaultfgwait">500</string>
+    <string name="bgscanwait">BG Scan/Wait Interval (ms)</string>
+    <string name="defaultbgscan">500</string>
+    <string name="defaultbgwait">500</string>
+    <string name="pwd">Password</string>
+    <string name="pwdhint">PåskBrorsa</string>
+    
+    
+    
+    
+    <string name="rfyrConfig">radiofyr - Konfigurera</string>
+    
+    <string name="save">Spara</string>
+    
 
     <string-array name="power_settings">
         <item>0dBm  (normal)</item>
