@@ -67,7 +67,7 @@ public class BeaconList extends Activity {
 					final List<Beacon> beacons) {
 
 				     myBeacons.addAll(beacons);
-				     Log.e(TAG, "Radiofyr found beacons "+count++);
+				     Log.e(TAG, "Radiofyr hittade "+count++ +" radiofyrar");
 
 				runOnUiThread(new Runnable() {
 					@Override
@@ -99,7 +99,7 @@ public class BeaconList extends Activity {
 	 * Connect to scanning service
 	 */
 	private void connectToService() {
-		getActionBar().setSubtitle("Scanning...");
+		getActionBar().setSubtitle("Söker...");
 		adapter.replaceWith(Collections.<Beacon> emptyList());
 		beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
 			@Override
@@ -118,9 +118,9 @@ public class BeaconList extends Activity {
 			if (resultCode == Activity.RESULT_OK) {
 				connectToService();
 			} else {
-				Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG)
+				Toast.makeText(this, "Bluetooth inte aktiverat", Toast.LENGTH_LONG)
 						.show();
-				getActionBar().setSubtitle("Bluetooth not enabled");
+				getActionBar().setSubtitle("Bluetooth inte aktiverat");
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
