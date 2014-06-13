@@ -55,10 +55,10 @@ public class BeaconAdapter extends BaseAdapter {
 	    ViewHolder holder = (ViewHolder) view.getTag();
 	    holder.macTextView.setText(String.format("MAC: %s (%.2fm)", beacon.getMacAddress(), beacon.getDistance()));
 	    holder.uuidTextView.setText(beacon.getProximityUUID());
-	    holder.majorTextView.setText("Plats: " + beacon.getMajor());
-	    holder.minorTextView.setText("Position: " + beacon.getMinor());
-	    holder.measuredPowerTextView.setText("Batteri: " + beacon.getMeasuredPower());
-	    holder.rssiTextView.setText("Signalstyrka: " + beacon.getRssi());
+	    holder.majorTextView.setText(beacon.getMajor());
+	    holder.minorTextView.setText(beacon.getMinor());
+	    holder.measuredPowerTextView.setText(beacon.getMeasuredPower());
+	    holder.rssiTextView.setText(beacon.getRssi());
 	  }
 
 	  private View inflateIfRequired(View view, int position, ViewGroup parent) {

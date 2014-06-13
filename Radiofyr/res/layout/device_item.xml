@@ -24,6 +24,7 @@
             android:tag="uuid"
             android:text="3AD10F43-0000-0000-0000-000000000001"
             android:textColor="#FF0000"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -37,19 +38,56 @@
                 android:layout_weight="50"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="minor"
-                    android:text="Position: 1"
-                    android:textColor="#FF0000" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="major"
-                    android:text="Plats: 20"
-                    android:textColor="#FF0000" />
+                    <TextView
+                        android:id="@+id/positionLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="end"
+                        android:text="Position:"
+                        android:textAlignment="textEnd"
+                        android:textColor="#FF0000" />
+
+                    <TextView
+                        android:id="@+id/positionValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:tag="minor"
+                        android:textColor="#FF0000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/siteLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="end"
+                        android:text="Plats:"
+                        android:textColor="#FF0000" />
+
+                    <TextView
+                        android:id="@+id/siteId"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:tag="major"
+                        android:textColor="#FF0000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -59,19 +97,56 @@
                 android:layout_weight="50"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="rssi"
-                    android:text="Signal: -85"
-                    android:textColor="#FF0000" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="mpower"
-                    android:text="Batteri: -58"
-                    android:textColor="#FF0000" />
+                    <TextView
+                        android:id="@+id/signalLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="end"
+                        android:text="Signal:"
+                        android:textColor="#FF0000" />
+
+                    <TextView
+                        android:id="@+id/signalStrength"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:tag="rssi"
+                        android:textColor="#FF0000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/batteryLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="end"
+                        android:text="Batteri:"
+                        android:textColor="#FF0000" />
+
+                    <TextView
+                        android:id="@+id/batteryValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:tag="mpower"
+                        android:textColor="#FF0000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
