@@ -72,7 +72,7 @@ public class BeaconAdapter2 extends ArrayAdapter<Beacon> {
 		// TODO getDistance() crashes
 		// double dist=beacon.getDistance();
 	    holder.macTextView.setText(String.format("MAC: %s", beacon.getMacAddress()));
-	    holder.uuidTextView.setText("Identitet: "+ beacon.getProximityUUID());
+	    holder.uuidTextView.setText(beacon.getProximityUUID());
 	    holder.majorTextView.setText("Plats: " + beacon.getMajor());
 	    holder.minorTextView.setText("Position: " + beacon.getMinor());
 	    holder.measuredPowerTextView.setText("Batteri: " + beacon.getMeasuredPower());
