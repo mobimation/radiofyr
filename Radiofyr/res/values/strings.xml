@@ -4,8 +4,8 @@
     <string name="app_name">Radiofyr</string>
     <string name="action_settings">Inställning</string>
     <string name="txPower">Sändstyrka</string>
-    <string name="beaconTxPower">Radiofyr sändstyrka</string>
-    <string name="proxUUID">Radiofyr identitet (16 hex-värden)</string>
+    <string name="beaconTxPower">Sändstyrka</string>
+    <string name="proxUUID">Radiofyr identitet</string>
     <string name="hiUUID">3ad10f4300000000</string>
     <string name="loUUID">0000000000000001</string>
     <string name="majorno">Plats</string>
