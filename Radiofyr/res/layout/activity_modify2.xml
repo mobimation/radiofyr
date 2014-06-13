@@ -51,7 +51,7 @@
 
                     <EditText
                         android:id="@+id/uuidhi"
-                        android:layout_width="fill_parent"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:alpha="0.7"
                         android:background="@drawable/rounded_textfield"
@@ -71,7 +71,7 @@
 
                     <EditText
                         android:id="@+id/uuidlo"
-                        android:layout_width="fill_parent"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:alpha="0.7"
                         android:background="@drawable/rounded_textfield"
