@@ -5,3 +5,6 @@ This implements a swedish language configuration app that enable convenient prog
 beacon identity of devices to be deployed in the field.
 
 This is developed for "AprilBrother" iBeacon modules and its Android API.
+
+Radiofyr has a web domain registered, http://radiofyr.se to facilitate any future commercial endeavor in
+go about deploying radiofyr beacons to the world.
