@@ -7,4 +7,4 @@ chinese text that made it unusable for deploying to Swedish customers so a swedi
 This is developed for "AprilBrother" iBeacon modules and uses its Android API for configuration access.
 
 Radiofyr has a web domain registered, http://radiofyr.se to facilitate any future commercial endeavor in
-go about deploying radiofyr beacons to the world.
+going about deploying radiofyr beacons to the world.
